@@ -1,9 +1,9 @@
 #[derive(Debug, Default)]
 pub struct Passport {
-    byr: Option<String>,
-    iyr: Option<String>,
-    eyr: Option<String>,
-    hgt: Option<String>,
+    byr: Option<usize>,
+    iyr: Option<usize>,
+    eyr: Option<usize>,
+    hgt: Option<Height>,
     hcl: Option<String>,
     ecl: Option<String>,
     pid: Option<String>,
@@ -22,6 +22,26 @@ impl Passport {
             .and(self.pid.as_ref())
             .is_some()
     }
+
+    pub fn is_valid2(&self) -> bool {
+        self.is_valid()
+            && (1920..=2002).contains(&self.byr.unwrap())
+            && (2010..=2020).contains(&self.iyr.unwrap())
+            && (2020..=2030).contains(&self.eyr.unwrap())
+            && self.hgt.unwrap().valid()
+            && self.hcl.as_ref().unwrap().starts_with('#')
+            && self
+                .hcl
+                .as_ref()
+                .unwrap()
+                .chars()
+                .skip(1)
+                .all(char::is_alphanumeric)
+            && ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"]
+                .contains(&self.ecl.as_ref().unwrap().as_ref())
+            && self.pid.as_ref().unwrap().chars().count() == 9
+            && self.pid.as_ref().unwrap().chars().all(char::is_numeric)
+    }
 }
 
 impl std::str::FromStr for Passport {
@@ -36,10 +56,10 @@ impl std::str::FromStr for Passport {
         for data in s.chunks(2) {
             let (name, value) = (data[0], data[1]);
             match name {
-                "byr" => passport.byr = Some(value.to_string()),
-                "iyr" => passport.iyr = Some(value.to_string()),
-                "eyr" => passport.eyr = Some(value.to_string()),
-                "hgt" => passport.hgt = Some(value.to_string()),
+                "byr" => passport.byr = Some(value.parse()?),
+                "iyr" => passport.iyr = Some(value.parse()?),
+                "eyr" => passport.eyr = Some(value.parse()?),
+                "hgt" => passport.hgt = Some(value.parse()?),
                 "hcl" => passport.hcl = Some(value.to_string()),
                 "ecl" => passport.ecl = Some(value.to_string()),
                 "pid" => passport.pid = Some(value.to_string()),
@@ -49,5 +69,37 @@ impl std::str::FromStr for Passport {
         }
 
         Ok(passport)
+    }
+}
+
+#[derive(Debug, Copy, Clone)]
+pub enum Height {
+    Cm(usize),
+    In(usize),
+    Unknown(usize),
+}
+
+impl Height {
+    pub fn valid(&self) -> bool {
+        match self {
+            Self::Cm(u) => (150..=193).contains(u),
+            Self::In(u) => (59..=76).contains(u),
+            _ => false,
+        }
+    }
+}
+
+impl std::str::FromStr for Height {
+    type Err = Box<dyn std::error::Error>;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let value = s.split(char::is_alphabetic).next().unwrap().parse()?;
+        let unit = s.rsplit(char::is_numeric).next();
+
+        Ok(match unit {
+            Some("cm") => Height::Cm(value),
+            Some("in") => Height::In(value),
+            _ => Height::Unknown(value),
+        })
     }
 }
