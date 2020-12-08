@@ -1,3 +1,5 @@
+#![feature(bool_to_option)]
+
 use std::collections::HashSet;
 
 use day8::{Instruction, Vm};
@@ -7,11 +9,7 @@ fn main() {
 
     let last = std::iter::successors(Some((0, 0)), |_| Some((vm.cycle().unwrap(), vm.acc)))
         .scan(HashSet::new(), |set, (cycle, acc)| {
-            if set.insert(cycle) {
-                Some(acc)
-            } else {
-                None
-            }
+            set.insert(cycle).then_some(acc)
         })
         .last()
         .unwrap();
