@@ -1,5 +1,3 @@
-#![recursion_limit = "2000"]
-
 fn main() {
     let mut input = aoc::parser::lines_from_args_as::<usize>(1).collect::<Vec<usize>>();
 
