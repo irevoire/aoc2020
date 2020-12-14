@@ -10,12 +10,11 @@ fn main() {
         .split(',')
         .map(|el| el.parse::<i128>().ok())
         .enumerate()
-        .filter_map(|el| Some((el.0 as i128, el.1?)))
-        .inspect(|el| print!("{:?} ", el))
+        .filter_map(|el| Some((-(el.0 as i128) % el.1?, el.1?)))
         .fold_first(|acc, el| (bezout_identity(el, acc), el.1 * acc.1))
         .unwrap();
 
-    dbg!(bus);
+    println!("res: {}", bus.0);
 }
 
 /// x = a (mod n)
@@ -25,19 +24,7 @@ fn main() {
 fn bezout_identity((a, n): (i128, i128), (b, m): (i128, i128)) -> i128 {
     let (_, u, v) = extended_euclidean_algorithm(n, m);
     let res = ((b * u * n) + (a * v * m));
-    res % (n * m)
-    /*
-    let nm = n.checked_mul(m).unwrap_or(0);
-
-    if (res - nm).abs() < res.abs() {
-        res - nm
-    } else if (res + nm).abs() < res.abs() {
-        dbg!(res, nm);
-        res + nm
-    } else {
-        res
-    }
-    */
+    res.rem_euclid(n * m)
 }
 
 /// compute the extended eclidean algorithm:
