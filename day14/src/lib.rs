@@ -1,7 +1,7 @@
 #[derive(Debug, Clone)]
 pub enum Op {
     Mask(String),
-    Mem(usize, u64),
+    Mem(usize, usize),
 }
 
 impl std::str::FromStr for Op {
@@ -36,18 +36,4 @@ pub fn implode_num(n: &str) -> usize {
     n.chars()
         .map(|c| (c == '1') as usize)
         .fold(0, |acc, n| (acc << 1) + n)
-}
-
-pub fn apply_mask(mask: &str, value: &str) -> String {
-    mask.chars()
-        .zip(
-            std::iter::repeat('0')
-                .take(mask.len() - value.len())
-                .chain(value.chars()),
-        )
-        .map(|(mask, value)| match mask {
-            'X' => value,
-            m => m,
-        })
-        .collect()
 }
