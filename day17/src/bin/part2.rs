@@ -24,12 +24,12 @@ fn main() {
 
 fn cycle(grid: Grid) -> Grid {
     grid.iter()
-        // all the coord we need to check, there is a lot of duplicate here but it should still be
-        // fast enough
         .flat_map(|(x, y, z, w)| {
             around((*x, *y, *z, *w))
                 .chain(std::iter::once((x, y, z, w)).map(|(x, y, z, w)| (*x, *y, *z, *w)))
         })
+        .collect::<Grid>()
+        .into_iter()
         .filter_map(|(x, y, z, w)| {
             let neighbors = around((x, y, z, w))
                 .filter(|(x, y, z, w)| grid.contains(&(*x, *y, *z, *w)))
