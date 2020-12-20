@@ -7,7 +7,7 @@ pub fn execute(s: &str) -> usize {
         if sub == "" {
             return n.unwrap();
         } else if n.is_none() {
-            return 42;
+            panic!("n is none");
         }
         s = sub.to_string();
         s.insert_str(0, &n.unwrap().to_string());
@@ -47,7 +47,7 @@ fn execute_binop(s: &str) -> (Option<usize>, &str) {
     }
     let (op, sub) = get_op(sub);
     if op.is_none() {
-        return (None, s);
+        return (left, sub);
     }
     let (right, sub) = get_n(sub);
     let (right, sub) = right.map_or_else(|| execute_parens(sub), |v| (Some(v), sub));

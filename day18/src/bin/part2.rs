@@ -1,47 +1,59 @@
 fn main() {
     let res: usize = aoc::parser::lines_from_args(1)
-        .map(|s| execute(s.replace(" ", "").as_bytes()))
+        .map(|s| day18::execute(&patch(&s.replace(" ", ""))))
         .sum();
 
     println!("res: {:?}", res);
 }
 
-enum Op {
-    El(char),
-    Op(Vec<Op>),
-}
-
 fn patch(s: &str) -> String {
-    let v = s.chars().enumerate().map(|(i, c)| match c {
-        '(' => patch(s.split_at(i).1),
-        c' => c.to_string(),
-    }).
+    let mut v: Vec<char> = s.chars().collect();
+    let mut start = 0;
 
-}
+    while let Some(i) = v.iter().skip(start).position(|&c| c == '+') {
+        let i = start + i;
 
-fn execute(s: &[u8]) -> usize {
-    let mut closure: Option<Box<dyn Fn(usize) -> usize>> = None;
-    let mut last = 0;
-
-    s.iter().enumerate().filter_map(|(i, c)| match c {
-        b'*' => {
-            closure = Some(Box::new(move |a| a * last));
-            None
-        }
-        b'+' => {
-            closure = Some(Box::new(move |a| last + a));
-            None
-        }
-        b'0'..=b'9' => {
-            last = c.to_string().parse::<usize>().unwrap();
-            if closure.is_some() {
-                let res = Some(closure.as_ref().unwrap()(last));
-                closure = None;
-                Some(res)
-            } else {
-                None
+        let left = match v[i - 1] {
+            ')' => {
+                i - v[..i - 1]
+                    .iter()
+                    .rev()
+                    .scan(-1, |acc, &c| {
+                        match c {
+                            '(' => *acc += 1,
+                            ')' => *acc -= 1,
+                            _ => (),
+                        };
+                        Some(*acc)
+                    })
+                    .position(|c| c == 0)
+                    .unwrap()
             }
-        }
-        _ => panic!(),
-    });
+            _ => i,
+        } - 1;
+        let right = match v[i + 1] {
+            '(' => {
+                i + v[i + 2..]
+                    .iter()
+                    .scan(1, |acc, &c| {
+                        match c {
+                            '(' => *acc += 1,
+                            ')' => *acc -= 1,
+                            _ => (),
+                        };
+                        Some(*acc)
+                    })
+                    .position(|c| c == 0)
+                    .unwrap()
+            }
+            _ => i,
+        } + 2;
+
+        v.insert(right, ')');
+        v.insert(left, '(');
+
+        start = i + 2;
+    }
+
+    v.iter().collect()
 }
