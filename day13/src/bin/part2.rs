@@ -1,5 +1,3 @@
-#![feature(iterator_fold_self)]
-
 fn main() {
     let mut lines = aoc::parser::lines_from_args(1);
 
@@ -11,7 +9,7 @@ fn main() {
         .map(|el| el.parse::<i128>().ok())
         .enumerate()
         .filter_map(|el| Some((-(el.0 as i128) % el.1?, el.1?)))
-        .fold_first(|acc, el| (bezout_identity(el, acc), el.1 * acc.1))
+        .reduce(|acc, el| (bezout_identity(el, acc), el.1 * acc.1))
         .unwrap();
 
     println!("res: {}", bus.0);
@@ -23,7 +21,7 @@ fn main() {
 /// return x
 fn bezout_identity((a, n): (i128, i128), (b, m): (i128, i128)) -> i128 {
     let (_, u, v) = extended_euclidean_algorithm(n, m);
-    let res = ((b * u * n) + (a * v * m));
+    let res = (b * u * n) + (a * v * m);
     res.rem_euclid(n * m)
 }
 

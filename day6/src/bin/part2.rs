@@ -1,5 +1,3 @@
-#![feature(iterator_fold_self)]
-
 use std::collections::HashSet;
 
 fn main() {
@@ -10,7 +8,7 @@ fn main() {
                 .split("\n")
                 .filter(|p| p != &"")
                 .map(|passager| passager.chars().collect::<HashSet<_>>())
-                .fold_first(|acc, passenger| acc.intersection(&passenger).copied().collect())
+                .reduce(|acc, passenger| acc.intersection(&passenger).copied().collect())
                 .unwrap()
                 .len()
         })

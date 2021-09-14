@@ -8,7 +8,7 @@ fn main() {
             m => std::iter::repeat(m).take(1),
         })
         .fold(
-            (Coord::default(), Coord::at(10, -1)),
+            (Coord::<isize>::default(), Coord::<isize>::at(10, -1)),
             |(ship, waypoint), movement| match movement {
                 Movement::Forward(n) => (ship + (waypoint * n), waypoint),
                 Movement::Right(_) => (ship, (-waypoint.y, waypoint.x).into()),

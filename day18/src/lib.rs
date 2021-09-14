@@ -1,5 +1,3 @@
-#![feature(or_patterns)]
-
 pub fn execute(s: &str) -> usize {
     let mut s = s.to_string();
     loop {
@@ -58,7 +56,7 @@ fn execute_binop(s: &str) -> (Option<usize>, &str) {
     match op.unwrap() {
         '+' => (Some(left.unwrap() + right.unwrap()), sub),
         '*' => (Some(left.unwrap() * right.unwrap()), sub),
-        c => panic!(format!("found {}", c)),
+        c => panic!("found {}", c),
     }
 }
 

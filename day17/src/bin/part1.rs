@@ -1,5 +1,3 @@
-#![feature(or_patterns)]
-
 use std::collections::HashSet;
 
 type Coord = (isize, isize, isize);
