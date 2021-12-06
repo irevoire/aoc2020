@@ -1,5 +1,5 @@
 fn main() {
-    let max = aoc::parser::lines_from_args(1)
+    let max = aoc::parser::lines::<String>()
         .map(day5::str_to_seat_id)
         .max();
 

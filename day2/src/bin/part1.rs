@@ -1,7 +1,7 @@
 use day2::*;
 
 fn main() {
-    let valid_pass = aoc::parser::lines_from_args_as::<Password>(1)
+    let valid_pass = aoc::parser::lines::<Password>()
         .filter(|pass| pass.is_valid1())
         .count();
 

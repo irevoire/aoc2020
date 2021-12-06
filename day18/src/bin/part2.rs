@@ -1,5 +1,5 @@
 fn main() {
-    let res: usize = aoc::parser::lines_from_args(1)
+    let res: usize = aoc::parser::lines::<String>()
         .map(|s| day18::execute(&patch(&s.replace(" ", ""))))
         .sum();
 

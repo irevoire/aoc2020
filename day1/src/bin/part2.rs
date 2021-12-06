@@ -1,5 +1,5 @@
 fn main() {
-    let iter = aoc::parser::lines_from_args(1)
+    let iter = aoc::parser::lines::<String>()
         .filter_map(|i| i.parse().ok())
         .collect::<Vec<usize>>();
 

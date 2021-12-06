@@ -5,7 +5,7 @@ use std::collections::HashSet;
 use day8::{Instruction, Vm};
 
 fn main() {
-    let mut vm = Vm::new(aoc::parser::lines_from_args_as::<Instruction>(1).collect());
+    let mut vm = Vm::new(aoc::parser::lines::<Instruction>().collect());
 
     let last = std::iter::successors(Some((0, 0)), |_| Some((vm.cycle().unwrap(), vm.acc)))
         .scan(HashSet::new(), |set, (cycle, acc)| {

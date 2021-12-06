@@ -3,7 +3,7 @@ use std::collections::HashSet;
 use day8::{Instruction, Vm};
 
 fn main() {
-    let mem = aoc::parser::lines_from_args_as::<Instruction>(1).collect::<Vec<_>>();
+    let mem = aoc::parser::lines::<Instruction>().collect::<Vec<_>>();
 
     let res = (0..mem.len())
         .find_map(|index| match mem[index] {

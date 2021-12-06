@@ -1,6 +1,6 @@
 fn main() {
     let grid = aoc::Grid::from(
-        aoc::parser::lines_from_args(1)
+        aoc::parser::lines::<String>()
             .map(|l| l.chars().map(|c| c == '#').collect())
             .collect(),
     );

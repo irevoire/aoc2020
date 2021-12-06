@@ -6,7 +6,7 @@ fn main() {
     let mut memory = Memory::new();
     let mut current_mask = String::new();
 
-    for op in aoc::parser::lines_from_args_as::<Op>(1).collect::<Vec<_>>() {
+    for op in aoc::parser::lines::<Op>().collect::<Vec<_>>() {
         match op {
             Op::Mask(s) => current_mask = s,
             Op::Mem(addr, value) => {

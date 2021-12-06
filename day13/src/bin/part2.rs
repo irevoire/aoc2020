@@ -1,5 +1,5 @@
 fn main() {
-    let mut lines = aoc::parser::lines_from_args(1);
+    let mut lines = aoc::parser::lines::<String>();
 
     let _time = lines.next();
     let bus = lines

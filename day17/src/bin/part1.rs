@@ -4,7 +4,7 @@ type Coord = (isize, isize, isize);
 type Grid = HashSet<Coord>;
 
 fn main() {
-    let grid: Grid = aoc::parser::lines_from_args(1)
+    let grid: Grid = aoc::parser::lines::<String>()
         .enumerate()
         .flat_map(|(y, line)| {
             line.chars()

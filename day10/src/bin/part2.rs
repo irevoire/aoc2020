@@ -1,5 +1,5 @@
 fn main() {
-    let mut input = aoc::parser::lines_from_args_as::<usize>(1).collect::<Vec<usize>>();
+    let mut input = aoc::parser::lines::<usize>().collect::<Vec<usize>>();
 
     input.push(0);
     input.sort();

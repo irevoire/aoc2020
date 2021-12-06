@@ -1,7 +1,7 @@
 use aoc::*;
 
 fn main() {
-    let res = aoc::parser::lines_from_args_as::<Movement>(1)
+    let res = aoc::parser::lines::<Movement>()
         .flat_map(|m| match m {
             Movement::Right(n) => std::iter::repeat(Movement::Right(0)).take((n / 90) as usize),
             Movement::Left(n) => std::iter::repeat(Movement::Left(0)).take((n / 90) as usize),

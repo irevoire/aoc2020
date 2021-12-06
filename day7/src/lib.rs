@@ -3,7 +3,7 @@ use std::collections::HashMap;
 pub type Input = HashMap<String, Vec<(usize, String)>>;
 
 pub fn parse() -> Input {
-    aoc::parser::lines_from_args(1)
+    aoc::parser::lines::<String>()
         .map(|line| {
             let line = line.replace("bags", "").replace("bag", "").replace(".", "");
             let line = line.split("contain").collect::<Vec<&str>>();

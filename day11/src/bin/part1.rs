@@ -6,7 +6,7 @@ use aoc::*;
 use day11::*;
 
 fn main() {
-    let v = aoc::parser::lines_from_args(1)
+    let v = aoc::parser::lines::<String>()
         .map(|line| line.chars().map(|c| c.into()).collect::<Vec<State>>())
         .collect();
     let base = Grid::from(v);
