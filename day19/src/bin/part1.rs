@@ -1,7 +1,7 @@
 use day19::*;
 
 fn main() {
-    let file = aoc::parser::read_file_from_args(1);
+    let file = aoc::parser::input::<String>();
     let mut file = file.split("\n\n");
 
     let rules = file.next().unwrap().parse::<Rules>().unwrap();

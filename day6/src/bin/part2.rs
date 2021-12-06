@@ -1,7 +1,7 @@
 use std::collections::HashSet;
 
 fn main() {
-    let res: usize = aoc::parser::read_file_from_args(1)
+    let res: usize = aoc::parser::input::<String>()
         .split("\n\n")
         .map(|form| {
             form.replace(" ", "")

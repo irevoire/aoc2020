@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 pub fn compute(n: usize) -> usize {
-    let input = aoc::parser::read_file_from_args(1)
+    let input = aoc::parser::input::<String>()
         .split(',')
         .filter_map(|s| s.trim().parse::<usize>().ok())
         .collect::<Vec<usize>>();

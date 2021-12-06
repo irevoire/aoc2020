@@ -7,7 +7,7 @@ pub fn parse() -> (
     Ticket,
     Vec<Ticket>,
 ) {
-    let input = aoc::parser::read_file_from_args(1);
+    let input = aoc::parser::input::<String>();
     let mut input = input.split("\n\n");
 
     let categories: Vec<(String, Range<usize>, Range<usize>)> = input
