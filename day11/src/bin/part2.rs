@@ -1,5 +1,3 @@
-#![feature(half_open_range_patterns)]
-#![feature(bool_to_option)]
 #![feature(exclusive_range_pattern)]
 
 use aoc::*;

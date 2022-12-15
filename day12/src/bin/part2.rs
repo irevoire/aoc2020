@@ -17,7 +17,7 @@ fn main() {
             },
         )
         .0
-        .distance_from_base();
+        .manhattan_distance_from_base();
 
     println!("res: {}", res);
 }

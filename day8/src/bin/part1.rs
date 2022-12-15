@@ -1,5 +1,3 @@
-#![feature(bool_to_option)]
-
 use std::collections::HashSet;
 
 use day8::{Instruction, Vm};
